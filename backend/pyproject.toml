@@ -1,0 +1,23 @@
+[project]
+name = "companio-backend"
+version = "0.1.0"
+description = "FastAPI backend for the Companio.ai candidate representative"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.115.0",
+    "groq>=0.32.0",
+    "pydantic>=2.10.0",
+    "pypdf>=6.0.0",
+    "python-docx>=1.1.0",
+    "python-dotenv>=1.0.1",
+    "python-multipart>=0.0.20",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28.0", "pytest>=8.3.0", "ruff>=0.11.0"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+

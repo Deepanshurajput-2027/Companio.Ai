@@ -1,0 +1,107 @@
+{
+  "name": "Deepanshu Rajput",
+  "headline": "Software Engineer and AI Developer specializing in AI-powered data systems",
+  "location": "Meerut, Uttar Pradesh, India",
+  "Willingness to relocate":"YES",
+  "email": "deepanshurajput2731@gmail.com",
+  "phone": "+91 8869058996",
+  "education": [
+    {
+      "institution": "Meerut Institute of Engineering and Technology",
+      "degree": "Bachelor of Technology",
+      "field": "Computer Science Engineering",
+      "cgpa": 8.01,
+      "start_year": 2023,
+      "end_year": 2027
+    }
+  ],
+  "skills": [
+    "JavaScript",
+    "TypeScript",
+    "Python",
+    "C++",
+    "HTML",
+    "CSS",
+    "React",
+    "Tailwind CSS",
+    "Node.js",
+    "Express.js",
+    "SQL",
+    "MongoDB",
+    "Mongoose",
+    "Supabase",
+    "Redis",
+    "Qdrant",
+    "Gemini AI",
+    "LangChain",
+    "BullMQ",
+    "Git",
+    "GitHub Actions",
+    "Browserless",
+    "Docker",
+    "Vercel",
+    "Prompt Engineering",
+    "RAG Architectures",
+    "Microservices",
+    "Event-Driven Design",
+    "CI/CD Pipelines",
+    "Data Structures and Algorithms",
+    "Analytical Problem-Solving",
+    "Technical Communication",
+    "Cross-Functional Collaboration",
+    "Agile Adaptability"
+  ],
+  "projects": [
+    {
+      "name": "AI-Powered Semantic Search Platform (Second Brain)",
+      "description": "Full-stack RAG pipeline using Qdrant and Gemini AI for semantic vector search and automated memory clustering across multi-format web data. A dedicated Python microservice isolates embedding generation and vector computations from the Node.js server. Redis and BullMQ provide event-driven asynchronous processing, reducing perceived API latency from approximately 12 seconds to under 150 milliseconds. Qdrant payload indexes enable under 50ms similarity search latency for more than 100,000 embeddings.",
+      "technologies": ["Node.js", "Python", "Express", "Qdrant", "Redis", "BullMQ", "Gemini AI"],
+      "url": null
+    },
+    {
+      "name": "Automated Accessibility CI/CD Pipeline (Accessify)",
+      "description": "GitHub Actions and webhooks automate Gemini AI-powered semantic WCAG audits inside pull requests. A serverless event-driven extraction layer uses Browserless to scan live DOM nodes and stores accessibility health metrics and audit trails in Supabase through Deno Edge Functions. A local runtime bypass reduced pre-commit execution latency from approximately 3.5 seconds to under 100 milliseconds.",
+      "technologies": ["GitHub Actions", "Node.js", "Supabase", "Gemini AI", "CI/CD", "Browserless", "Deno Edge Functions"],
+      "url": null
+    },
+    {
+      "name": "Automated Accessibility CI/CD Pipeline (Accessify)",
+      "description": "GitHub Actions and webhooks automate Gemini AI-powered semantic WCAG audits inside pull requests. A serverless event-driven extraction layer uses Browserless to scan live DOM nodes and stores accessibility health metrics and audit trails in Supabase through Deno Edge Functions. A local runtime bypass reduced pre-commit execution latency from approximately 3.5 seconds to under 100 milliseconds.",
+      "technologies": ["GitHub Actions", "Node.js", "Supabase", "Gemini AI", "CI/CD", "Browserless", "Deno Edge Functions"],
+      "url": null
+    }
+  ],
+  "experience": [
+    {
+      "company": "EduSkills (AICTE)",
+      "role": "Full Stack Developer Intern",
+      "duration": "January 2026 - March 2026",
+      "description": "Completed a 10-week virtual MERN full-stack internship with project work. Engineered an end-to-end e-commerce application with React and Redux Toolkit, designed RESTful APIs with Node.js and Express.js, integrated MongoDB through Mongoose, and implemented JWT-based authentication and authorization.",
+      "skills_used": ["React", "Redux Toolkit", "Node.js", "Express.js", "MongoDB", "Mongoose", "REST APIs", "JWT"]
+    }
+  ],
+  "achievements": [
+    "Awarded the Excellence credential in the 2.0 Job Ready AI Powered Cohort for demonstrated proficiency in full-stack web development, DSA, aptitude, reasoning, problem-solving, and real-world applications.",
+    "Completed the 2.0 Job Ready AI Powered Cohort, demonstrating proficiency in full-stack web development, DSA, aptitude, reasoning, problem-solving, and real-world applications."
+  ],
+  "certifications": [
+    "Full Stack Development with GenAI, Sheryians Coding School (September 2025 - June 2026)",
+    "MERN Stack Development with AI, Anudip Foundation / METTL, 230 hours, Grade A1",
+    "Generative AI Mastermind, Outskill",
+    "Internship Credential: MERN Full Stack Development with Project, 10-week program, issued March 13, 2026",
+    "Introduction to Automation, UiPath, issued February 19, 2026",
+    "Basics of Python - Part I, Code360, issued January 27, 2025",
+    "Basics of Python - Part II, Code360, issued February 21, 2025",
+    "A Comprehensive Guide to C Programming, Code360, issued December 31, 2024",
+    "Basics of C++, Code360, issued October 27, 2024",
+    "Data Structures and Algorithms (Beginner to Intermediate), Code360, issued January 5, 2025",
+    "Fundamentals of HTML, Code360, issued January 19, 2025",
+    "Fundamentals of CSS, Code360, issued January 29, 2025",
+    "ChatGPT, Code360, issued January 6, 2025"
+  ],
+  "social_links": {
+    "github": "https://github.com/deepanshurajput-2027",
+    "linkedin": "https://www.linkedin.com/in/deepanshu-rajput-1ab3693b0/",
+    "portfolio": "https://deepanshuxorajput.vercel.app/"
+  }
+}
