@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUp, BriefcaseBusiness, Download, FileText, Github, Globe, Linkedin, Paperclip, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/+$/, "");
 
@@ -25,9 +27,9 @@ function App() {
         }
         setProfile(await response.json());
       } catch (requestError) {
-        setError(
-          `Could not connect to the backend at ${API_URL}. Check the Vercel VITE_API_URL setting and redeploy. (${requestError.message})`,
-        );
+        const message = `Could not connect to the backend at ${API_URL}. Check the Vercel VITE_API_URL setting and redeploy.`;
+        setError(`${message} (${requestError.message})`);
+        toast.error(message);
       }
     }
 
@@ -61,7 +63,10 @@ function App() {
         answer += decoder.decode(value, { stream: true });
         setMessages([...nextMessages, { role: "assistant", content: answer }]);
       }
-    } catch (requestError) { setError(requestError.message); setMessages(messages); }
+    } catch (requestError) {
+      toast.error(requestError.message || "The chat request failed.");
+      setMessages(messages);
+    }
     finally { setBusy(false); }
   }
 
@@ -75,7 +80,9 @@ function App() {
       });
       if (!response.ok) throw new Error((await response.json()).detail || "Match request failed.");
       setMatch(await response.json());
-    } catch (requestError) { setError(requestError.message); }
+    } catch (requestError) {
+      toast.error(requestError.message || "The role match request failed.");
+    }
     finally { setMatchBusy(false); }
   }
 
@@ -88,7 +95,9 @@ function App() {
       const response = await fetch(`${API_URL}/api/match/upload`, { method: "POST", body: form });
       if (!response.ok) throw new Error((await response.json()).detail || "Upload failed.");
       setMatch(await response.json());
-    } catch (requestError) { setError(requestError.message); }
+    } catch (requestError) {
+      toast.error(requestError.message || "The job description upload failed.");
+    }
     finally { setMatchBusy(false); }
   }
 
@@ -108,7 +117,7 @@ function App() {
       link.remove();
       URL.revokeObjectURL(url);
     } catch (requestError) {
-      setError(requestError.message);
+      toast.error(requestError.message || "The resume download failed.");
     }
   }
 
@@ -119,6 +128,7 @@ function App() {
           <strong>{error ? "Companio could not start" : "Loading Companio"}</strong>
           {error && <p>{error}</p>}
         </div>
+        <ToastContainer position="bottom-right" theme="dark" />
       </main>
     );
   }
@@ -155,7 +165,7 @@ function App() {
           {match && <div className="result"><div className="score"><strong>{Math.round(match.score)}%</strong><span>match score</span></div><h3>{match.recommendation}</h3><ResultList title="Strengths" items={match.strengths}/><ResultList title="Missing or unclear" items={match.missing_skills}/></div>}
         </aside>
       </section>
-      {error && <div className="error">{error}</div>}
+      <ToastContainer position="bottom-right" theme="dark" newestOnTop />
     </main>
   );
 }

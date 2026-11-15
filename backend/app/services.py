@@ -102,29 +102,63 @@ def stream_chat(
 def match_job_description(job_description: str) -> MatchResponse:
     client = get_client()
     profile = load_profile()
-    schema = MatchResponse.model_json_schema()
     prompt = f"""Compare this candidate profile with the job description.
-Return ONLY valid JSON matching this schema:
-{json.dumps(schema, indent=2)}
+Return ONLY one valid JSON object with exactly these fields:
+{{
+  "score": number from 0 to 100,
+  "matching_skills": ["short skill names"],
+  "missing_skills": ["short skill names"],
+  "strengths": ["short evidence-based statements"],
+  "experience_requirement_met": true, false, or null,
+  "recommendation": "one concise sentence",
+  "caveats": ["short clarification statements"]
+}}
 
 Do not invent information. Score from 0 to 100. Use null for
 experience_requirement_met when the job does not state an experience requirement.
+Keep arrays concise: at most 5 items each, and keep each item under 200 characters.
+Do not repeat the job description or candidate profile in the response. Keep the
+recommendation and caveats concise so the complete JSON fits comfortably in the
+response.
 
 CANDIDATE PROFILE:
 {profile_as_text(profile)}
 
 JOB DESCRIPTION:
 {job_description}"""
+    request = {
+        "model": os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
+        "messages": [{"role": "user", "content": prompt}],
+        "response_format": {"type": "json_object"},
+        "temperature": 0,
+        "max_tokens": 3000,
+    }
     try:
-        response = client.chat.completions.create(
-            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
-            messages=[{"role": "system", "content": prompt}],
-            response_format={"type": "json_object"},
-            temperature=0,
-            max_tokens=1000,
-        )
+        response = client.chat.completions.create(**request)
     except APIError as error:
-        raise RuntimeError(f"Groq could not analyze the job description: {error}") from error
+        error_text = str(error).lower()
+        if "max_completion_tokens" not in error_text and "json_validate_failed" not in error_text:
+            raise RuntimeError(
+                "The AI service could not analyze this job description right now."
+            ) from error
+
+        retry_prompt = (
+            f"{prompt}\n\nURGENT OUTPUT RULE: Return the smallest valid JSON possible. "
+            "Use at most 3 items in each array, one short sentence for recommendation, "
+            "and one short sentence per caveat. Do not explain your answer."
+        )
+        try:
+            response = client.chat.completions.create(
+                **{
+                    **request,
+                    "messages": [{"role": "user", "content": retry_prompt}],
+                    "max_tokens": 1800,
+                }
+            )
+        except APIError as retry_error:
+            raise RuntimeError(
+                "The AI service could not format the role-match result. Please try again."
+            ) from retry_error
     raw_content = response.choices[0].message.content
     if not raw_content:
         raise RuntimeError("The model returned an empty match result.")

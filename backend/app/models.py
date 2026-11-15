@@ -54,7 +54,7 @@ class ChatRequest(BaseModel):
 
 
 class MatchRequest(BaseModel):
-    job_description: str = Field(min_length=20, max_length=20000)
+    job_description: str = Field(min_length=20, max_length=50000)
 
 
 class MatchResponse(BaseModel):
