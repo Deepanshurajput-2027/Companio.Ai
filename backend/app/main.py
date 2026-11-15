@@ -16,6 +16,11 @@ from .services import extract_document_text, load_profile, match_job_description
 load_dotenv()
 
 
+def _frontend_origins() -> list[str]:
+    configured = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
+    return [origin.strip().rstrip("/") for origin in configured.split(",") if origin.strip()]
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     load_profile()
@@ -25,7 +30,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(title="Companio.ai API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")],
+    allow_origins=_frontend_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

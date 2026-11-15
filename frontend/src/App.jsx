@@ -3,7 +3,7 @@ import { ArrowUp, BriefcaseBusiness, Download, FileText, Github, Globe, Linkedin
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/+$/, "");
 
 function App() {
   const [profile, setProfile] = useState(null);
@@ -24,8 +24,10 @@ function App() {
           throw new Error("Profile request failed.");
         }
         setProfile(await response.json());
-      } catch {
-        setError("Could not load the candidate profile.");
+      } catch (requestError) {
+        setError(
+          `Could not connect to the backend at ${API_URL}. Check the Vercel VITE_API_URL setting and redeploy. (${requestError.message})`,
+        );
       }
     }
 
@@ -110,7 +112,16 @@ function App() {
     }
   }
 
-  if (!profile) return <main className="loading">Loading Companio<span>.</span></main>;
+  if (!profile) {
+    return (
+      <main className="loading">
+        <div>
+          <strong>{error ? "Companio could not start" : "Loading Companio"}</strong>
+          {error && <p>{error}</p>}
+        </div>
+      </main>
+    );
+  }
   return (
     <main className="shell">
       <header className="topbar"><div className="brand"><div className="brand-mark"></div><div><strong>companio<span>.ai</span></strong><small>your candidate, in conversation</small></div></div><div className="status"><i/> Profile active</div></header>
